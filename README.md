@@ -40,9 +40,10 @@ foreach ( api()->each( 'tickets' ) as $ticket ) {
 }
 ```
 
-Behind the scenes, no more than 100 (by default) records are obtained via the API. If there are 50,000 tickets in the
-LiveAgent database, but we decide to bail out of our loop after 100 iterations, then this will have been the more 
-efficient way to do things.
+Behind the scenes, we fetch in batches of no more than 100 records. So, if there are 50,000 tickets in the LiveAgent database, 
+but we decide to bail out of our loop after 100 iterations, then this will have been the more efficient way to do things. Given
+this note the use of `api()->all( $type )` may not seem very appealing, but it *can* be handy if you want to load all records
+of a certain type (perhaps, _contact groups)_ into an array in a single line.
 
 If we only need a single record, we can do:
 
