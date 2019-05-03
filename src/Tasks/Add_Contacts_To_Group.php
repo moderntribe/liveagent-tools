@@ -35,16 +35,6 @@ class Add_Contacts_To_Group {
 				$this->add_contact_to_group( $individual_contact );
 			}
 		}
-
-		// Original loop
-		/*foreach ( LiveAgent_Tools\api()->each( 'contacts' ) as $contact ) {
-			// Each contact may be associated with more than one email address
-			foreach ( $contact->emails as $known_email_address ) {
-				if ( in_array( $known_email_address, $this->contact_emails ) ) {
-					$this->add_contact_to_group( $contact );
-				}
-			}
-		}*/
 	}
 
 	/**
