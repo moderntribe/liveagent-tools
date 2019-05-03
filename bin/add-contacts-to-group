@@ -26,7 +26,6 @@ if ( $argc < 3 ) {
 
 $group = $argv[ $argc - 2 ];
 $email_file = $argv[ $argc - 1 ];
-$emails = [];
 
 if ( ! file_exists( $email_file ) ) {
 	exit( 'Last argument should be a valid filepath (for the list of email addresses.' );
@@ -34,10 +33,11 @@ if ( ! file_exists( $email_file ) ) {
 
 $emails  = array_filter( (array) file( $email_file, FILE_IGNORE_NEW_LINES ) );
 $results = ( new Tasks\Add_Contacts_To_Group( $emails, $group ) )->summary();
+$count   = count( $emails );
 
-print 'Tried adding ' . count( $emails ) . ' email(s) to group "' . $group . '":'
-    . $results->failed . ' failed'
-    . $results->skipped . ' skipped'
-    . $results->updated . ' updated';
+print "Tried adding {$count} email(s) to group '{$group}':\n"
+    . " - {$results->failed} failed\n"
+    . " - {$results->skipped} skipped\n"
+    . " - {$results->updated} updated\n";
 
 exit( 0 );
