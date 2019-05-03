@@ -25,14 +25,26 @@ class Add_Contacts_To_Group {
 		$this->contact_emails = $contact_emails;
 		$this->determine_group_id( $group_reference );
 
-		foreach ( LiveAgent_Tools\api()->each( 'contacts' ) as $contact ) {
+		// New loop
+		foreach ( $contact_emails as $individual_contact_email_address ) {
+			$individual_contact = LiveAgent_Tools\api()->first( 'contacts', [ 'filters' => [
+				'emails' => [ $individual_contact_email_address ]
+			] ] );
+
+			if ( $individual_contact ) {
+				$this->add_contact_to_group( $individual_contact );
+			}
+		}
+
+		// Original loop
+		/*foreach ( LiveAgent_Tools\api()->each( 'contacts' ) as $contact ) {
 			// Each contact may be associated with more than one email address
 			foreach ( $contact->emails as $known_email_address ) {
 				if ( in_array( $known_email_address, $this->contact_emails ) ) {
 					$this->add_contact_to_group( $contact );
 				}
 			}
-		}
+		}*/
 	}
 
 	/**

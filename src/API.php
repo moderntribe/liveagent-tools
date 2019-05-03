@@ -60,6 +60,32 @@ class API {
 		while ( $object_count === $batch_size );
 	}
 
+	/**
+	 * @param string $path
+	 * @param array $query
+	 *
+	 * @return object|false
+	 */
+	public function first( string $path, array $query = [] ) {
+		$query['_page'] = 1;
+		$query['_perPage'] = 1;
+
+		try {
+			$http    = new HTTP_Client;
+			$url     = main()->get_config( 'api_url' ) . '/' . $path;
+			$objects = json_decode( $http->request( 'GET', $url, $this->params( [ 'query' => $query ] ) )->getBody() );
+		}
+		catch ( HTTP_Exception $exception ) {
+			return false;
+		}
+
+		if ( is_array( $objects ) && count( $objects ) >= 1 ) {
+			return current( $objects );
+		}
+
+		return false;
+	}
+
 	private function get_array( $path, array $query = [] ) {
 		$params = $this->params( [
 			'query' => $query,
