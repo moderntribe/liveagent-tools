@@ -1,0 +1,43 @@
+#!/usr/bin/php
+<?php
+/**
+ * "Add contacts to group" command.
+ *
+ * Accepts a group name (or ID) which must already exist and a path
+ * to a file containing a list of email addresses, one email address
+ * per line.
+ *
+ * Example usage:
+ *
+ * `add-contacts-to-group vip-group /path/to/contact-email-addresses.txt`
+ *
+ * @todo convert to a fully-fledged command with proper argument parsing, etc
+ */
+namespace Modern_Tribe\Purple_Team\LiveAgent_Tools;
+
+global $argc;
+global $argv;
+
+require __DIR__ . '/../init.php';
+
+if ( $argc < 3 ) {
+	exit( 'Group reference and email file must be specified.' );
+}
+
+$group = $argv[ $argc - 2 ];
+$email_file = $argv[ $argc - 1 ];
+$emails = [];
+
+if ( ! file_exists( $email_file ) ) {
+	exit( 'Last argument should be a valid filepath (for the list of email addresses.' );
+}
+
+$emails  = array_filter( (array) file( $email_file, FILE_IGNORE_NEW_LINES ) );
+$results = ( new Tasks\Add_Contacts_To_Group( $emails, $group ) )->summary();
+
+print 'Tried adding ' . count( $emails ) . ' email(s) to group "' . $group . '":'
+    . $results->failed . ' failed'
+    . $results->skipped . ' skipped'
+    . $results->updated . ' updated';
+
+exit( 0 );

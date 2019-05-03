@@ -1,0 +1,17 @@
+{
+    "name": "moderntribe/liveagent-tools",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Modern_Tribe\\Purple_Team\\LiveAgent_Tools\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "barryhughes",
+            "email": "barry@codingkills.me"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+  "notes": "Make a copy of this file and name it 'config.json'.",
+  "api_url": "https://liveagent.installation/api/v3",
+  "api_key": "<ENSURE THIS KEY HAS THE PERMISSIONS YOU REQUIRE>",
+  "https_unsafe": true
+}
