@@ -11,7 +11,6 @@ class Add_Contacts_To_Group {
 	private $skipped = 0;
 	private $updated = 0;
 
-
 	/**
 	 * Given an array of contact email addresses, adds each to the specified
 	 * group (can be a group ID or a group name).
@@ -25,7 +24,6 @@ class Add_Contacts_To_Group {
 		$this->contact_emails = $contact_emails;
 		$this->determine_group_id( $group_reference );
 
-		// New loop
 		foreach ( $contact_emails as $individual_contact_email_address ) {
 			$individual_contact = LiveAgent_Tools\api()->first( 'contacts', [ 'filters' => [
 				'emails' => [ $individual_contact_email_address ]
